@@ -8,6 +8,23 @@ const Users = () => {
         .then(res => res.json())
         .then(data => setUsers(data));
     }, [])
+
+    // DELETE AN USER
+    const handleDeleteUser = id => {
+        const url = `http://localhost:5000/users/${id}`;
+        fetch(url, {
+            method: 'DELETE'
+        })
+        .then(res => res.json())
+        .then(data => {
+            if(data.deletedCount > 0){
+                alert('deleted successfully!!');
+                const remainingUsers = users.filter(user => user._id !== id);
+                setUsers(remainingUsers);
+            }
+        })
+    }
+
     return (
         <div>
             <h2>Users: {users.length}</h2>
@@ -17,7 +34,7 @@ const Users = () => {
                         key={user._id}
                         >{user.name} :: {user.email}
                             <button>Update</button>
-                            <button>X</button>
+                            <button onClick={() => handleDeleteUser(user._id)}>X</button>
                         </li>)
                 }
             </ul>
