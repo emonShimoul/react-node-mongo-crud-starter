@@ -15,7 +15,13 @@ const AddUser = () => {
             },
             body: JSON.stringify(newUser)
         })
-        .then()
+        .then(res => res.json())
+        .then(data => {
+            if(data.insertedId){
+                alert("Successfully added the user!!");
+                e.target.reset();
+            }
+        })
         e.preventDefault();
     }
     return (
